@@ -1,0 +1,194 @@
+/* General page styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Container for the entire page content */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;  /* Ensures the page container fills the viewport height */
+}
+
+/* Main content to fill remaining space before footer */
+.content-wrap {
+    flex: 1;  /* Ensures the content fills the space between header and footer */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* Banner header styles */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b17b7b;
+    padding: 10px 20px;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header .logo {
+    width: 50px;
+    height: 50px;
+}
+
+.dashboard-header h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24px;
+    margin: 0;
+}
+
+.dashboard-header .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Dashboard grid layout */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 40px;
+}
+
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eceae7;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    text-decoration: none;
+    color: black;
+}
+
+.dashboard-card img {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+.dashboard-card span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.05);
+}
+
+/* Footer Container */
+.footer {
+    background-color: #2c2c2c;
+    color: white;
+    padding: 30px 0;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-top: auto;  /* Ensures the footer stays at the bottom */
+}
+
+/* Content Sections */
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+}
+
+.footer-section h2, .footer-section h3 {
+    color: #b17b7b;
+    font-size: 20px;
+}
+
+.footer-section p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Contact Section Styling */
+.footer-section.contact i {
+    margin-right: 10px;
+}
+
+/* Social Media Icons */
+.footer-section.social a {
+    color: white;
+    font-size: 18px;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.footer-section.social a:hover {
+    color: #b17b7b;
+}
+
+/* Bottom Footer */
+.footer-bottom {
+    background-color: #1f1f1f;
+    color: #aaa;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+}
+
+.footer-bottom a {
+    color: #b17b7b;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        align-items: center;
+        text-align: center;
+    }
+}

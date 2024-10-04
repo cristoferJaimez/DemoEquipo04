@@ -1,0 +1,123 @@
+/* Estilo del contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 98.5vh;
+    background-color: #d3d3d3;
+    flex-direction: column;
+    margin: 0;
+    padding: 100px;
+    box-sizing: border-box;
+  }
+  
+  /* Estilo del formulario */
+  form {
+    background-color: #eceae7;
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo de la etiqueta y el campo de entrada */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* Estilo del enlace de recuperación */
+  .recovery-link {
+    align-self: flex-end;
+    margin-top: -10px; /* Ajustar el espacio para que quede más cerca del input */
+    font-size: 12px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  
+  .recovery-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Título */
+  h1 {
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 24px;
+  }
+  
+  /* Estilo de las etiquetas */
+  label {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 4px;
+  }
+  
+  /* Estilo de los campos de entrada */
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box; /* Para asegurarse de que el padding no desborde el contenedor */
+  }
+  
+  /* Estilo del botón */
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box; /* Asegurar que el padding no rompa el diseño */
+  }
+  
+  /* Cambiar color al pasar el mouse sobre el botón */
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsividad general */
+  @media (max-width: 768px) {
+    form {
+      padding: 20px; /* Ajustar padding en pantallas más pequeñas */
+    }
+  
+    input, button {
+      font-size: 14px; /* Ajustar tamaño de texto en pantallas pequeñas */
+    }
+  
+    h1 {
+      font-size: 20px; /* Ajustar tamaño de fuente del título en pantallas pequeñas */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    form {
+      padding: 15px; /* Menos padding en pantallas muy pequeñas */
+    }
+  
+    input, button {
+      font-size: 12px; /* Reducir el tamaño del texto en pantallas pequeñas */
+    }
+  
+    h1 {
+      font-size: 18px;
+    }
+  }
+  
