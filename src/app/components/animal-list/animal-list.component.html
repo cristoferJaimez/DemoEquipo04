@@ -1,0 +1,55 @@
+<div class="page-container">
+    <!-- Encabezado con opción para regresar -->
+    <div class="dashboard-header">
+        <img src="assets/logo.png" alt="Logo" class="logo" />
+        <h1>Gestión de Animales</h1>
+        <button class="back-button" (click)="goBack()">Regresar</button>
+    </div>
+  
+    <!-- Contenido principal con barra de búsqueda y listado de animales -->
+    <div class="main-content">
+        <!-- Barra de búsqueda -->
+        <div class="search-panel">
+            <h3>Buscar Animales</h3>
+            <input type="text" placeholder="Ingrese nombre del animal, especie o dueño..." (input)="onSearch($event)" />
+            
+            <div *ngIf="selectedAnimal" class="animal-details">
+                <h4>Detalles del Animal</h4>
+                <p><strong>Nombre:</strong> {{ selectedAnimal.name }}</p>
+                <p><strong>Especie:</strong> {{ selectedAnimal.species }}</p>
+                <p><strong>Edad:</strong> {{ selectedAnimal.age }} años</p>
+                <p><strong>Dueño:</strong> {{ selectedAnimal.owner }}</p>
+                <p><strong>Cuidadores:</strong> {{ selectedAnimal.caregiver }}</p>
+                <p><strong>Procedimiento Actual:</strong> {{ selectedAnimal.currentProcedure }}</p>
+                <button (click)="viewMedicalHistory(selectedAnimal)">Ver Historias Médicas</button>
+            </div>
+        </div>
+  
+        <!-- Listado paginado de animales -->
+        <div class="animal-list">
+            <h3>Listado de Animales</h3>
+            <div *ngFor="let animal of paginatedAnimals" class="animal-item">
+                <div class="animal-info-card">
+                    <img src="assets/animal-placeholder.png" alt="{{ animal.name }}" class="animal-image" />
+                    <div class="animal-info">
+                        <p><strong>Nombre:</strong> {{ animal.name }}</p>
+                        <p><strong>Especie:</strong> {{ animal.species }}</p>
+                        <p><strong>Dueño:</strong> {{ animal.owner }}</p>
+                    </div>
+                    <div class="crud-actions">
+                        <button (click)="viewAnimal(animal)">Ver</button>
+                        <button (click)="editAnimal(animal)">Editar</button>
+                        <button (click)="deleteAnimal(animal)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+  
+            <!-- Paginación -->
+            <div class="pagination">
+                <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+                <span>Página {{ currentPage }} de {{ totalPages }}</span>
+                <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</div>

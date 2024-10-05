@@ -1,0 +1,31 @@
+<div class="page-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <button class="back-button" (click)="goBack()">⬅️</button>
+      <img src="assets/logo.png" alt="Logo" class="logo" />
+      <h1>Gestión de Salud Animal</h1>
+      <img src="assets/profile-icon.png" alt="Profile" class="profile-icon" />
+    </div>
+  
+    <!-- Content -->
+    <div class="gestion-animales-container">
+      <h1>Gestión de Animales</h1>
+      <div class="option-cards">
+        <a href="animal-list" routerLink="/animal-list" class="option-card">
+          <img src="assets/animal-list-icon.png" alt="Lista de Animales" />
+          <span>Lista de Animales</span>
+        </a>
+  
+        <a href="incident-report" routerLink="/incident-report" class="option-card">
+          <img src="assets/incident-report-icon.png" alt="Reporte de Incidentes" />
+          <span>Reporte de Incidentes</span>
+        </a>
+  
+        <a href="task-assignment" routerLink="/task-assignment" class="option-card">
+          <img src="assets/task-assignment-icon.png" alt="Asignación de Tareas" />
+          <span>Asignación de Tareas</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  

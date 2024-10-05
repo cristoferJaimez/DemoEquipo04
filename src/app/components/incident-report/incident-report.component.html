@@ -1,0 +1,48 @@
+<div class="page-container">
+    <!-- Encabezado con opción para regresar -->
+    <div class="dashboard-header">
+        <img src="assets/logo.png" alt="Logo" class="logo" />
+        <h1>Gestión de Reportes de Incidentes</h1>
+        <button class="back-button" (click)="goBack()">Regresar</button>
+    </div>
+
+    <!-- Barra de búsqueda de reportes -->
+    <div class="main-content">
+        <div class="search-panel">
+            <h3>Buscar Reportes</h3>
+            <input type="text" placeholder="Buscar reporte por fecha, animal o cuidador..." (input)="onSearch($event)" list="reportSuggestions"/>
+            <datalist id="reportSuggestions">
+                <option *ngFor="let report of reports" [value]="report.animal.name + ' - ' + report.date"></option>
+            </datalist>
+        </div>
+
+        <!-- Listado de reportes paginado -->
+        <div class="report-list">
+            <h3>Listado de Reportes</h3>
+            <div *ngFor="let report of paginatedReports" class="report-item">
+                <div class="report-header">
+                    <p><strong>Animal:</strong> {{ report.animal.name }}</p>
+                    <p><strong>Fecha:</strong> {{ report.date }}</p>
+                    <p><strong>Cuidador:</strong> {{ report.caregiver.name }}</p>
+                </div>
+                <div class="report-body">
+                    <p><strong>Tareas Aplicadas:</strong> {{ report.task }}</p>
+                    <p><strong>Detalles:</strong> {{ report.details }}</p>
+                </div>
+                <div class="crud-actions">
+                    <button (click)="viewReport(report)">Ver</button>
+                    <button (click)="editReport(report)">Editar</button>
+                    <button class="delete" (click)="deleteReport(report)">Eliminar</button>
+                    <button (click)="printReport(report)">Imprimir</button>
+                </div>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination">
+                <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+                <span>Página {{ currentPage }} de {{ totalPages }}</span>
+                <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</div>

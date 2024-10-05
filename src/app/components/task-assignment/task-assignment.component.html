@@ -1,0 +1,61 @@
+<div class="page-container">
+    <!-- Encabezado con opción para regresar -->
+    <div class="dashboard-header">
+        <img src="assets/logo.png" alt="Logo" class="logo" />
+        <h1>Asignación de Tareas</h1>
+        <button class="back-button" (click)="goBack()">Regresar</button>
+    </div>
+
+    <!-- Contenido principal con barra de búsqueda de cuidadores y formulario de asignación -->
+    <div class="main-content">
+        <!-- Barra de búsqueda de cuidadores -->
+        <div class="search-panel">
+            <h3>Buscar Cuidadores</h3>
+            <input type="text" placeholder="Ingrese nombre del cuidador..." (input)="onSearch($event)" />
+            
+            <div *ngIf="selectedCaregiver" class="caregiver-details">
+                <h4>Detalles del Cuidador</h4>
+                <p><strong>Nombre:</strong> {{ selectedCaregiver.name }}</p>
+                <p><strong>Experiencia:</strong> {{ selectedCaregiver.experience }} años</p>
+                <p><strong>Animales Asignados:</strong> {{ selectedCaregiver.assignedAnimals.join(', ') }}</p>
+                
+                <!-- Mostrar las tareas asignadas -->
+                <h4>Tareas Asignadas</h4>
+                    <ul *ngIf="selectedCaregiver && selectedCaregiver.tasks && selectedCaregiver.tasks.length > 0">
+                        <li *ngFor="let task of selectedCaregiver.tasks">
+                            <p><strong>Animal:</strong> {{ task.animal }}</p>
+                            <p><strong>Día:</strong> {{ task.day }}</p>
+                            <p><strong>Duración:</strong> {{ task.duration }} horas</p>
+                            <p><strong>Motivo:</strong> {{ task.reason }}</p>
+                        </li>
+                    </ul>
+                <p *ngIf="selectedCaregiver && (!selectedCaregiver.tasks || selectedCaregiver.tasks.length === 0)">
+                No hay tareas asignadas.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Formulario de asignación de tareas -->
+        <div class="assignment-form">
+            <h3>Asignar Tarea</h3>
+            <form (submit)="assignTask()">
+                <label for="animal">Animal a Cuidar</label>
+                <select id="animal" [(ngModel)]="task.animal" name="animal">
+                    <option *ngFor="let animal of availableAnimals" [value]="animal">{{ animal }}</option>
+                </select>
+
+                <label for="day">Día</label>
+                <input id="day" type="date" [(ngModel)]="task.day" name="day" required />
+
+                <label for="duration">Duración (horas)</label>
+                <input id="duration" type="number" [(ngModel)]="task.duration" name="duration" required />
+
+                <label for="reason">Motivo</label>
+                <textarea id="reason" [(ngModel)]="task.reason" name="reason" placeholder="Ingrese el motivo para la asignación..."></textarea>
+
+                <button type="submit">Asignar Tarea</button>
+            </form>
+        </div>
+    </div>
+</div>
