@@ -1,5 +1,12 @@
 # DemoGrupo4
 
+
+![Node.js](https://img.shields.io/badge/Node.js-18.2.5-green)
+![Angular](https://img.shields.io/badge/Angular-18.2.5-red)
+![Visual Studio Code](https://img.shields.io/badge/IDE-VS%20Code-blue)
+
+
+
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 18.2.5.
 
 ## Servidor de desarrollo
