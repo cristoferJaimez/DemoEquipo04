@@ -17,9 +17,9 @@ export const environment = {
     //Cuidador
     apiAllCuidador : 'https://localhost:7119/api/v1/Cuidador',
     apiPostCuidador : 'https://localhost:7119/api/v1/Cuidador',
-    apiGetCuidador : 'https://localhost:7119/api/v1/Cuidador/{id}',
-    apiPutCuidador : 'https://localhost:7119/api/v1/Cuidador/{id}',
-    apiDeleteCuidador : 'https://localhost:7119/api/v1/Cuidador/{id}',
+    apiGetCuidador : 'https://localhost:7119/api/v1/Cuidador',
+    apiPutCuidador : 'https://localhost:7119/api/v1/Cuidador',
+    apiDeleteCuidador : 'https://localhost:7119/api/v1/Cuidador',
 
 
     //Cuidado
@@ -33,7 +33,7 @@ export const environment = {
     apiPostExamen : 'https://localhost:7119/api/v1/Examen',
 
     //vacuna
-    apiGetVacuna : 'https://localhost:7119/api/v1/vacuna/{id}',
+    apiGetVacuna : 'https://localhost:7119/api/v1/vacuna',
     apiPostVacuna : 'https://localhost:7119/api/v1/vacuna',
   
   };

@@ -38,7 +38,12 @@
             <button (click)="viewAnimal(animal)">Ver</button>
             <button (click)="editAnimal(animal)">Editar</button>
             <button (click)="deleteAnimal(animal)">Eliminar</button>
+            <!-- Nuevo botón para ver historial médico -->
+            <button (click)="viewVaccinationHistory(animal)">Ver Historial Médico</button>
+            <!-- Nuevo botón para añadir vacunación -->
+            <button (click)="openVaccinationModal(animal)">Añadir Vacunación</button>
           </div>
+          
         </div>
       </div>
 
@@ -74,6 +79,69 @@
         <button (click)="saveEditAnimal()">Guardar Cambios</button>
         <button (click)="isEditModalVisible = false">Cancelar</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal para ver el animal (sin editar) -->
+  <div *ngIf="viewModalVisible" class="modal">
+    <div class="modal-content">
+      <h4>Detalles del Animal</h4>
+      <label>Nombre:</label>
+      <p>{{ selectedAnimal?.nombre }}</p>
+
+      <label>Especie:</label>
+      <p>{{ selectedAnimal?.especie }}</p>
+
+      <label>Tipo de Comida:</label>
+      <p>{{ selectedAnimal?.tipoComida }}</p>
+
+      <label>Estado de Salud:</label>
+      <p>{{ selectedAnimal?.estadoSalud }}</p>
+
+      <label>Peso:</label>
+      <p>{{ selectedAnimal?.peso }} kg</p>
+
+      <div class="modal-actions">
+        <button (click)="closeViewModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para ver el historial de vacunaciones -->
+<div *ngIf="isHistoryModalVisible" class="modal">
+  <div class="modal-content">
+    <h4>Historial de Vacunación</h4>
+    <div *ngFor="let vacunacion of vaccinations" class="vaccination-item">
+      <p><strong>Nombre de la Vacuna:</strong> {{ vacunacion.nombre }}</p>
+      <p><strong>Fecha de Aplicación:</strong> {{ vacunacion.fechaAplicacion | date }}</p>
+      <p><strong>Próxima Dosis:</strong> {{ vacunacion.fechaProximaDosis | date }}</p>
+    </div>
+    <div class="modal-actions">
+      <button (click)="closeModals()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal para añadir vacunación -->
+<div *ngIf="isVaccinationModalVisible" class="modal">
+  <div class="modal-content">
+    <h4>Añadir Vacunación</h4>
+    <label>Nombre de la Vacuna:</label>
+    <input [(ngModel)]="newVaccination.nombre" type="text" />
+
+    <label>Fecha de Aplicación:</label>
+    <input [(ngModel)]="newVaccination.fechaAplicacion" type="date" />
+
+    <label>Próxima Dosis:</label>
+    <input [(ngModel)]="newVaccination.fechaProximaDosis" type="date" />
+
+    <div class="modal-actions">
+      <button (click)="addVaccination()">Guardar Vacunación</button>
+      <button (click)="closeModals()">Cancelar</button>
     </div>
   </div>
 </div>

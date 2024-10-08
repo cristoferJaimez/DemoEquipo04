@@ -10,12 +10,14 @@
     <div class="main-content">
       <form #registerForm="ngForm" (submit)="onSubmit()" novalidate>
         <h3>Seleccione el tipo de registro</h3>
-        <label for="user-type">Tipo de Registro</label>
-        <select id="user-type" (change)="onUserTypeChange($event)" required>
-          <option value="" disabled selected>Seleccione...</option>
-          <option value="cuidador">Cuidador</option>
-          <option value="animal">Animal</option>
-        </select>
+            <label for="user-type">Tipo de Registro</label>
+            <select id="user-type" (change)="onUserTypeChange($event)" required>
+            <option value="" disabled selected>Seleccione...</option>
+            <option value="cuidador">Cuidador</option>
+            <option value="animal">Animal</option>
+            <option value="user">Usuario</option> <!-- Added the "user" option -->
+            </select>
+
   
         <!-- Formulario de Cuidador -->
 <div *ngIf="iscuidador" class="cuidador-form">
@@ -170,5 +172,101 @@
   </div>
   
       </form>
+
+
+
+     <!-- Formulario de Usuario -->
+<div *ngIf="isUser" class="user-form">
+    <h4>Datos del Usuario</h4>
+  
+    <!-- Campo de texto para el Nombre del Usuario -->
+    <label for="user-name">Nombre</label>
+    <input
+      type="text"
+      id="user-name"
+      [(ngModel)]="user.name"
+      name="userName"
+      #userName="ngModel"
+      required
+      minlength="3"
+    />
+    <div *ngIf="userName.invalid && userName.touched" class="error">
+      El nombre es obligatorio y debe tener al menos 3 caracteres.
+    </div>
+  
+    <!-- Campo de texto para el Nombre de Usuario -->
+    <label for="user-username">Nombre de Usuario</label>
+    <input
+      type="text"
+      id="user-username"
+      [(ngModel)]="user.username"
+      name="userUsername"
+      #userUsername="ngModel"
+      required
+      minlength="3"
+    />
+    <div *ngIf="userUsername.invalid && userUsername.touched" class="error">
+      El nombre de usuario es obligatorio y debe tener al menos 3 caracteres.
+    </div>
+  
+    <!-- Input para seleccionar una foto -->
+<label for="user-photo">Subir Foto</label>
+<input type="file" id="user-photo" (change)="onFileSelected($event)" />
+
+<!-- Mostrar error si la foto no ha sido subida -->
+<div *ngIf="!user.urlPhoto && userPhotoTouched" class="error">
+  Es obligatorio subir una foto.
+</div>
+  
+    <!-- Campo de correo para el Usuario -->
+    <label for="user-email">Correo Electrónico</label>
+    <input
+      type="email"
+      id="user-email"
+      [(ngModel)]="user.email"
+      name="userEmail"
+      #userEmail="ngModel"
+      required
+    />
+    <div *ngIf="userEmail.invalid && userEmail.touched" class="error">
+      Introduzca un correo válido.
+    </div>
+  
+    <!-- Campo de contraseña para el Usuario -->
+    <label for="user-password">Contraseña</label>
+    <input
+      type="password"
+      id="user-password"
+      [(ngModel)]="user.password"
+      name="userPassword"
+      #userPassword="ngModel"
+      required
+      minlength="8"
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+    />
+    <div *ngIf="userPassword.invalid && userPassword.touched" class="error">
+      La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo especial.
+    </div>
+  
+    <!-- Campo de teléfono para el Usuario -->
+    <label for="user-phone">Teléfono</label>
+    <input
+      type="tel"
+      id="user-phone"
+      [(ngModel)]="user.phoneNumber"
+      name="userPhone"
+      #userPhone="ngModel"
+      required
+      pattern="[0-9]{10}"
+    />
+    <div *ngIf="userPhone.invalid && userPhone.touched" class="error">
+      El teléfono debe ser numérico y tener 10 dígitos.
+    </div>
+  
+    <!-- Botón de registro -->
+    <button type="submit" [disabled]="registerForm.invalid">Registrar Usuario</button>
+  </div>
+  
+
     </div>
   </div>
