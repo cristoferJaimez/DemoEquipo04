@@ -1,72 +1,101 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Animal {
-  id: number;
-  name: string;
-  species: string;
-  age: number;
-  owner: string;
-  caregiver: string;
-  currentProcedure: string;
-}
+import { FormsModule } from '@angular/forms';
+import { AnimalService, Animal } from '../../services/animal/animal.service';
 
 @Component({
   selector: 'app-animal-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './animal-list.component.html',
   styleUrls: ['./animal-list.component.css']
 })
-export class AnimalListComponent {
-  animals: Animal[] = [
-    { id: 1, name: 'Max', species: 'Perro', age: 5, owner: 'Carlos', caregiver: 'Juan', currentProcedure: 'Vacunación' },
-    { id: 2, name: 'Whiskers', species: 'Gato', age: 3, owner: 'Lucía', caregiver: 'Ana', currentProcedure: 'Examen' },
-    { id: 3, name: 'Buddy', species: 'Perro', age: 2, owner: 'Pedro', caregiver: 'María', currentProcedure: 'Baño' },
-    { id: 4, name: 'Chirpy', species: 'Pájaro', age: 1, owner: 'Marcos', caregiver: 'Carla', currentProcedure: 'Desparasitación' },
-    { id: 5, name: 'Nibbles', species: 'Conejo', age: 4, owner: 'Daniel', caregiver: 'Esteban', currentProcedure: 'Control' },
-  ];
-
+export class AnimalListComponent implements OnInit {
+  animals: Animal[] = [];
+  paginatedAnimals: Animal[] = [];
+  selectedAnimal: Animal | null = null;
   currentPage: number = 1;
   itemsPerPage: number = 3;
-  totalPages: number = Math.ceil(this.animals.length / this.itemsPerPage);
-  paginatedAnimals: Animal[] = this.animals.slice(0, this.itemsPerPage);
-  selectedAnimal: Animal | null = null;
+  totalPages: number = 0;
+  isLoading: boolean = true;  
+  isEditModalVisible = false; // Variable para mostrar u ocultar el modal de edición
 
+  // Definir un array de pesos disponibles (de 1 a 50 kg)
+  pesosDisponibles: number[] = Array.from({ length: 50 }, (_, i) => i + 1);
+
+  constructor(private animalService: AnimalService) {}
+
+  ngOnInit() {
+    this.fetchAnimals();  
+  }
+
+  fetchAnimals() {
+    this.animalService.getAllAnimals().subscribe((data: Animal[]) => {
+      this.isLoading = false;
+      this.animals = data;
+      this.updatePagination();
+    }, error => {
+      console.error('Error fetching animals:', error);
+    });
+  }
+
+  // Función para eliminar un animal
+deleteAnimal(animal: Animal) {
+  if (confirm(`¿Está seguro de que desea eliminar a ${animal.nombre}?`)) {
+    this.animalService.deleteAnimal(animal.id, animal).subscribe(() => {
+      this.animals = this.animals.filter(a => a.id !== animal.id);
+      this.updatePagination();
+    }, error => {
+      console.error('Error eliminando animal:', error);
+    });
+  }
+}
+
+  // Mostrar modal para editar animal
+  editAnimal(animal: Animal) {
+    this.selectedAnimal = animal;
+    this.isEditModalVisible = true; // Mostrar modal
+  }
+
+
+// Guardar los cambios del animal editado
+saveEditAnimal() {
+  if (this.selectedAnimal) {
+    this.animalService.updateAnimal(this.selectedAnimal.id, this.selectedAnimal)
+      .subscribe(
+        (response) => {
+          if (response) {
+            alert(`Animal actualizado correctamente: ${response.nombre}`);
+          } else {
+            alert('Animal actualizado, pero no se recibió una respuesta del servidor.');
+          }
+          this.isEditModalVisible = false;  // Cierra el modal después de guardar
+          this.fetchAnimals();  // Refresca la lista de animales
+        },
+        (error) => {
+          alert('Error al actualizar el animal');
+          console.error('Error al actualizar:', error);
+        }
+      );
+  }
+}
+
+
+  
+  onSearch(event: any) {
+    const searchValue = event.target.value.toLowerCase();
+    const filteredAnimals = this.animals.filter(animal =>
+      animal.nombre.toLowerCase().includes(searchValue) ||
+      animal.especie.toLowerCase().includes(searchValue)
+    );
+    this.updatePagination(filteredAnimals);
+  }
+  
   viewAnimal(animal: Animal) {
     this.selectedAnimal = animal;
   }
 
-  editAnimal(animal: Animal) {
-    alert(`Editar el animal: ${animal.name}`);
-  }
-
-  deleteAnimal(animal: Animal) {
-    if (confirm(`¿Está seguro de que desea eliminar a ${animal.name}?`)) {
-      this.animals = this.animals.filter(a => a.id !== animal.id);
-      this.updatePagination();
-    }
-  }
-
-  onSearch(event: any) {
-    const searchValue = event.target.value.toLowerCase();
-    const filteredAnimals = this.animals.filter(animal =>
-      animal.name.toLowerCase().includes(searchValue) ||
-      animal.species.toLowerCase().includes(searchValue) ||
-      animal.owner.toLowerCase().includes(searchValue)
-    );
-    this.updatePagination(filteredAnimals);
-  }
-
-  updatePagination(filteredAnimals?: Animal[]) {
-    const animalsToPaginate = filteredAnimals || this.animals;
-    this.totalPages = Math.ceil(animalsToPaginate.length / this.itemsPerPage);
-    this.paginatedAnimals = animalsToPaginate.slice(
-      (this.currentPage - 1) * this.itemsPerPage,
-      this.currentPage * this.itemsPerPage
-    );
-  }
-
+  // Funciones de paginación
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -81,11 +110,21 @@ export class AnimalListComponent {
     }
   }
 
+  updatePagination(filteredAnimals?: Animal[]) {
+    const animalsToPaginate = filteredAnimals || this.animals;
+    this.totalPages = Math.ceil(animalsToPaginate.length / this.itemsPerPage);
+    this.paginatedAnimals = animalsToPaginate.slice(
+      (this.currentPage - 1) * this.itemsPerPage,
+      this.currentPage * this.itemsPerPage
+    );
+  }
+
   goBack() {
     window.history.back();
   }
 
+  // Ver historias médicas del animal
   viewMedicalHistory(animal: Animal) {
-    alert(`Ver historias médicas de: ${animal.name}`);
+    alert(`Ver historias médicas de: ${animal.nombre}`);
   }
 }

@@ -20,9 +20,6 @@
     padding: 20px;
     color: white;
     width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .dashboard-header h1 {
@@ -56,93 +53,63 @@
     align-items: flex-start;
     padding: 20px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 800px;
     gap: 30px;
-}
-
-/* Formulario de registro */
-form {
-    width: 100%;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    border-radius: 8px;
 }
 
-form h3, form h4 {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
-
-form label {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-form input[type="text"],
-form input[type="tel"],
-form input[type="number"],
-form input[type="date"],
-form select,
-form textarea {
+/* Form fields */
+form input, form select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
     margin-bottom: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    position: relative;
 }
 
+form input.ng-valid.ng-touched,
+form select.ng-valid.ng-touched {
+    border-color: #4CAF50;
+}
+
+form input.ng-invalid.ng-touched,
+form select.ng-invalid.ng-touched {
+    border-color: #F44336;
+}
+
+/* Error messages */
+.error {
+    color: #F44336;
+    font-size: 12px;
+    position: absolute;
+    bottom: -18px; /* Asegura que el mensaje se muestre debajo del campo */
+    left: 0;
+}
+
+/* To prevent the input from "jumping" when the error message appears */
+.field-container {
+    position: relative;
+    margin-bottom: 40px; /* Extra space to accommodate error messages */
+}
+
+/* Submit button */
 form button {
-    width: 100%;
     background-color: #4A90E2;
     color: white;
     padding: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    width: 100%;
+    font-size: 16px;
 }
 
-form button:hover {
-    background-color: #357ABD;
-}
-
-/* Listado de mascotas */
-.pets-list {
-    margin-top: 20px;
-}
-
-.pet-card {
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.pet-card p {
-    margin: 0;
-    font-size: 14px;
-    color: #333;
-}
-
-.pet-card p strong {
-    color: #4A90E2;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .main-content {
-        flex-direction: column;
-        gap: 20px;
-    }
+form button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

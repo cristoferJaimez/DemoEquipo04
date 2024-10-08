@@ -3,12 +3,10 @@
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="input-group">
-      <label for="username">Usuario o Correo</label>
-      <input id="username" formControlName="username" type="text" />
+      <label for="email">Usuario o Correo</label>
+      <input id="email" formControlName="email" type="email" />
     </div>
-    
-    
-    
+
     <a href="gestion-animales" routerLink="/gestion-animales" class="recovery-link">
       <img src="assets/icon1.png" alt="Icon 1" />
       <span>Recuperar contraseña?</span>
@@ -19,4 +17,10 @@
 
     <button type="submit" [disabled]="loginForm.invalid">Login</button>
   </form>
+
+  <!-- Mostrar el mensaje de la API aquí -->
+  <div *ngIf="message" class="message-box">
+    <p>{{ message }}</p>
+  </div>
+  
 </div>

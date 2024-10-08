@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
-
-// Interface for pets to ensure the structure is clear
-interface Pet {
-  name: string;
-  species: string;
-  age: number;
-  vet: string;
-}
+import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
+import { environment } from '../../enviroment'; // Import environment variables
 
 @Component({
   selector: 'app-register',
@@ -18,63 +12,66 @@ interface Pet {
   imports: [CommonModule, FormsModule]
 })
 export class RegisterComponent {
-  isCaregiver = false;
-  isUser = false;
-  isVet = false;
-  isUserRegistered = false;
-  showPetForm = false;
-  
-  // Veterinarios disponibles para selección de mascota
-  vets = [
-    { name: 'Dr. Perez' },
-    { name: 'Dra. Martinez' },
-    { name: 'Dr. Lopez' }
-  ];
+  iscuidador = false;
+  isAnimal = false;
 
-  // Data objects for user types
-  user = { name: '', id: '', address: '' };
-  caregiver = { name: '', id: '', phone: '', experience: 0 };
-  vet = { name: '', id: '', phone: '', specialty: '' };
+  // Data object for cuidador
+  cuidador = { nombre: '', correo: '', telefono: '', turno: '' };
 
-  // Array to store pets
-  pets: Pet[] = [];
+  // Data object for animal
+  animal = { especie: '', nombre: '', tipoComida: '', estadoSalud: '', peso: 0 };
 
-  // Defining the pet object
-  pet: Pet = {
-    name: '',
-    species: '',
-    age: 0,
-    vet: ''
-  };
+  constructor(private http: HttpClient) {}
 
   onUserTypeChange(event: any) {
     const userType = event.target.value;
-    this.isCaregiver = userType === 'caregiver';
-    this.isUser = userType === 'user';
-    this.isVet = userType === 'vet';
+    this.iscuidador = userType === 'cuidador';
+    this.isAnimal = userType === 'animal';
   }
 
   onSubmit() {
-    if (this.isCaregiver) {
-      alert(`Cuidador registrado: ${this.caregiver.name}`);
-    } else if (this.isUser) {
-      this.isUserRegistered = true;
-      alert(`Usuario registrado: ${this.user.name}`);
-    } else if (this.isVet) {
-      alert(`Veterinario registrado: ${this.vet.name}`);
+    if (this.iscuidador) {
+      this.registercuidador();
+    } else if (this.isAnimal) {
+      this.registerAnimal();
     }
   }
 
-  addPet() {
-    this.showPetForm = true;
+  // Method to register cuidador
+  registercuidador() {
+    this.http.post(`${environment.apiPostCuidador}`, this.cuidador).subscribe(
+      (response) => {
+        alert(`Cuidador registrado correctamente: ${this.cuidador.nombre}`);
+        this.resetCuidadorForm();  // Llamada para limpiar el formulario
+      },
+      (error) => {
+        alert('Error al registrar el cuidador');
+        console.error(error);
+      }
+    );
   }
 
-  savePet() {
-    this.pets.push({ ...this.pet });
-    this.showPetForm = false;
+   // Método para registrar animal
+   registerAnimal() {
+    this.http.post(`${environment.apiPostAnimal}`, this.animal, { responseType: 'text' }).subscribe(
+      (response) => {
+        alert(`Animal registrado correctamente: ${this.animal.nombre}`);
+      },
+      (error) => {
+        alert('Error al registrar el animal');
+        console.error(error);
+      }
+    );
+  }
 
-    // Resetting the pet form after saving
-    this.pet = { name: '', species: '', age: 0, vet: '' };
+  // Método para limpiar el formulario del cuidador
+  resetCuidadorForm() {
+    this.cuidador = { nombre: '', correo: '', telefono: '', turno: '' };
+  }
+
+  // Método para limpiar el formulario del animal
+  resetAnimalForm() {
+    this.animal = { especie: '', nombre: '', tipoComida: '', estadoSalud: '', peso: 0 };
   }
 
   goBack() {
